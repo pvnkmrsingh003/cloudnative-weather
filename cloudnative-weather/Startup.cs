@@ -24,7 +24,9 @@ namespace cloudnative_weather
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddHttpClient("Weather", client => client.BaseAddress = new Uri(Configuration["Weather:uri"]));
 			services.AddControllers();
+			services.Configure<Settings>(options => Configuration.GetSection("Weather").Bind(options));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
